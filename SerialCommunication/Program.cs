@@ -1,8 +1,8 @@
 ﻿using System.IO.Ports;
-SerialPort port = new();
-port.WriteTimeout = 1500;
-port.ReadTimeout = 1500;
+using SerialCommunication;
+
 var availablePorts = SerialPort.GetPortNames();
+string portName = "COM1";
 if (availablePorts.Length == 0)
 {
     Console.Error.WriteLine("error: no available port found");
@@ -10,7 +10,7 @@ if (availablePorts.Length == 0)
 }
 else if (availablePorts.Length == 1)
 {
-    port.PortName = availablePorts[0];
+    portName = availablePorts[0];
 }
 else
 {
@@ -22,7 +22,7 @@ else
     while (true)
     {
         Console.Write("select port: ");
-        var input = Reader.ReadLine();
+        var input = Console.ReadLine();
         if (input == null)
         {
             Console.Error.WriteLine("error: no valid input");
@@ -43,78 +43,18 @@ else
             Console.Error.WriteLine("error: invalid index");
             Environment.Exit(1);
         }
-        port.PortName = availablePorts[idx];
+        portName = availablePorts[idx];
         break;
     }
 }
-port.Open();
-Console.WriteLine($"successfully connected via {availablePorts[0]}");
-bool is_running = true;
-Thread thread = new(new ThreadStart(WriteLoop));
-thread.Start();
-while (is_running)
-{
-    try
-    {
-        var input = port.ReadByte();
-        Console.Write((char)input);
-    }
-    catch (TimeoutException)
-    {
-        is_running = false;
-    }
-}
-thread.Join();
-void WriteLoop()
-{
-    while (is_running)
-    {
-        try
-        {
-            var input = Reader.ReadLine(1000);
-            if (input == "stop")
-            {
-                is_running = false;
-            }
-            port.Write(input);
-        }
-        catch (Exception) { }
-    }
-}
-// https://stackoverflow.com/questions/57615/how-to-add-a-timeout-to-console-readline
-class Reader
-{
-    private static Thread inputThread;
-    private static AutoResetEvent getInput, gotInput;
-    private static string input;
 
-    static Reader()
-    {
-        getInput = new AutoResetEvent(false);
-        gotInput = new AutoResetEvent(false);
-        inputThread = new Thread(reader);
-        inputThread.IsBackground = true;
-        inputThread.Start();
-    }
-
-    private static void reader()
-    {
-        while (true)
-        {
-            getInput.WaitOne();
-            input = Console.ReadLine();
-            gotInput.Set();
-        }
-    }
-
-    // omit the parameter to read a line without a timeout
-    public static string ReadLine(int timeOutMillisecs = Timeout.Infinite)
-    {
-        getInput.Set();
-        bool success = gotInput.WaitOne(timeOutMillisecs);
-        if (success)
-            return input;
-        else
-            throw new TimeoutException("User did not provide input within the timelimit.");
-    }
+SerialCommunicationHelper helper = new(portName);
+//簡易的なメインループ
+//while (true)
+for (int i = 0; i < 10; i++)
+{
+    Console.Write(System.Text.Encoding.UTF8.GetString(helper.readAll()));
+    Thread.Sleep(300);
 }
+Console.WriteLine("end mainloop");
+
