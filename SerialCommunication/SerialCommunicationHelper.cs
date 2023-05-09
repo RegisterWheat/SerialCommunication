@@ -17,12 +17,28 @@ namespace SerialCommunication
             port.Open();
             Console.WriteLine($"successfully connected via {port.PortName}");
         }
+        ~SerialCommunicationHelper()
+        {
+            if (port.IsOpen)
+            {
+                Close();
+            }
+        }
 
-        public byte[] readAll()
+        public byte[] ReadAll()
         {
             var result = new byte[port.BytesToRead];
             port.Read(result, 0, port.BytesToRead);
             return result;
+        }
+        public int Write(byte[] data)
+        {
+            port.Write(data, 0, data.Length);
+            return data.Length;
+        }
+        public void Close()
+        {
+            port.Close();
         }
     }
 }

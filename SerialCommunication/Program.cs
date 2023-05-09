@@ -53,7 +53,7 @@ SerialCommunicationHelper helper = new(portName);
 //while (true)
 for (int i = 0; i < 10; i++)
 {
-    Console.Write(System.Text.Encoding.UTF8.GetString(helper.readAll()));
+    Console.Write(System.Text.Encoding.UTF8.GetString(helper.ReadAll()));
     Thread.Sleep(300);
 }
 Console.WriteLine("end mainloop");
