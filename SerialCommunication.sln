@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialCommunication", "SerialCommunication\SerialCommunication.csproj", "{D65EBC7E-2413-4DF4-B000-BFF797274540}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerialCommunication", "SerialCommunication\SerialCommunication.csproj", "{D65EBC7E-2413-4DF4-B000-BFF797274540}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BB7934ED-8D33-4AC2-836F-F1A2D6E3431C} = {BB7934ED-8D33-4AC2-836F-F1A2D6E3431C}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialCommunicationHelper", "SerialCommunicationHelper\SerialCommunicationHelper.csproj", "{BB7934ED-8D33-4AC2-836F-F1A2D6E3431C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{D65EBC7E-2413-4DF4-B000-BFF797274540}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D65EBC7E-2413-4DF4-B000-BFF797274540}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D65EBC7E-2413-4DF4-B000-BFF797274540}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB7934ED-8D33-4AC2-836F-F1A2D6E3431C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7934ED-8D33-4AC2-836F-F1A2D6E3431C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7934ED-8D33-4AC2-836F-F1A2D6E3431C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7934ED-8D33-4AC2-836F-F1A2D6E3431C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

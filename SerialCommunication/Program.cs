@@ -51,10 +51,11 @@ else
 SerialCommunicationHelper helper = new(portName);
 //簡易的なメインループ
 //while (true)
-for (int i = 0; i < 10; i++)
+for (int i = 0; i < 1000; i++)
 {
     Console.Write(System.Text.Encoding.UTF8.GetString(helper.ReadAll()));
-    Thread.Sleep(300);
+    Thread.Sleep(50);
+    Console.Write("aaaaa");
 }
 Console.WriteLine("end mainloop");
 

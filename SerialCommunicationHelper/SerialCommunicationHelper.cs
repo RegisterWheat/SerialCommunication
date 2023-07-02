@@ -2,7 +2,7 @@
 
 namespace SerialCommunication
 {
-    class SerialCommunicationHelper
+    public class SerialCommunicationHelper
     {
         private SerialPort port;
         public SerialCommunicationHelper(string portName, int baudRate = 9600, int writeTimeout = 500, int readTimeout = 500)
@@ -27,9 +27,18 @@ namespace SerialCommunication
 
         public byte[] ReadAll()
         {
-            var result = new byte[port.BytesToRead];
-            port.Read(result, 0, port.BytesToRead);
+            var readSize = port.BytesToRead;
+            var result = new byte[readSize];
+            port.Read(result, 0, readSize);
             return result;
+        }
+        public string ReadLine()
+        {
+            return port.ReadLine();
+        }
+        public int ReadByte()
+        {
+            return port.ReadByte();
         }
         public int Write(byte[] data)
         {
